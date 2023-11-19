@@ -1,0 +1,24 @@
+Histogram of List Lengths:
+Length 50: *
+Length 53: *
+Length 57: *
+Length 60: *
+Length 62: **
+Length 64: *
+Length 65: *
+Length 66: *
+Length 67: ***
+Length 68: *
+Length 69: *
+Length 70: **
+Length 71: **
+Length 73: *
+Length 74: *
+Length 76: ***
+Length 77: ***
+Length 78: *
+Length 80: *
+Length 82: **
+
+Variance of List Lengths: 64.1122222222222
+Lengths of the Longest 10% of Lists: [82, 82, 80]
