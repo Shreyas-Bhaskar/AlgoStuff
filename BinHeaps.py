@@ -89,7 +89,6 @@ class BinomialHeap:
         return y.key
 
     def extract_min(self):
-        # Find the tree with the minimum key
         min_tree_parent = None
         min_tree = self.head
         prev = None
@@ -102,13 +101,11 @@ class BinomialHeap:
             prev = curr
             curr = curr.sibling
 
-        # Remove the tree with the minimum key
         if min_tree_parent is not None:
             min_tree_parent.sibling = min_tree.sibling
         else:
             self.head = min_tree.sibling
 
-        # Reverse the order of min_tree's children and merge them into the heap
         child = min_tree.child
         temp = BinomialHeap()
 
@@ -137,6 +134,18 @@ class BinomialHeap:
         self.decrease_key(x, float('-inf'))
         self.extract_min()
 
+    #def print_heap(self):
+        node = self.head
+        while node is not None:
+            self.print_tree(node)
+            node = node.sibling
+
+    #def print_tree(self, node, level=0):
+        if node is None:
+            return
+        print(" " * (level * 4) + f"Key: {node.key}, Degree: {node.degree}")
+        self.print_tree(node.child, level + 1)
+
     def print_heap(self):
         node = self.head
         while node is not None:
@@ -147,19 +156,70 @@ class BinomialHeap:
         if node is None:
             return
         print(" " * (level * 4) + f"Key: {node.key}, Degree: {node.degree}")
-        self.print_tree(node.child, level + 1)
+        child = node.child
+        while child is not None:
+            self.print_tree(child, level + 1)
+            child = child.sibling
+    
+
+    def search(self, key, node):
+        if node is None:
+            return None
+        if node.key == key:
+            return node
+
+        found = self.search(key, node.child)
+        if found is not None:
+            return found
+
+        return self.search(key, node.sibling)
+    def find_node(self, key):
+        current = self.head
+        while current is not None:
+            found = self.search(key, current)
+            if found is not None:
+                return found
+            current = current.sibling
+        return None
 
 binomial_heap = BinomialHeap()
-keys = [random.randint(1, 100) for _ in range(10)]
+keys = [4,6,3,11,9,5,14,10,21,7,13,20,2]
 
 for key in keys:
     binomial_heap.insert(key)
     binomial_heap.print_heap()
     print()
+#print("deleting 5")
+
+node_to_delete = None
+current_node = binomial_heap.head
+
+while current_node is not None:
+    print(current_node.key)
+    if current_node.key == 5:
+        node_to_delete = current_node
+        break
+    current_node = current_node.sibling
+
+if node_to_delete is not None:
+    print(f"Deleted key {node_to_delete.key}")
+    #binomial_heap.delete(node_to_delete)
+else:
+    print("Key not found in the heap")
+
+binomial_heap.print_heap()
+
 
 min_key = binomial_heap.minimum()
 print(f"Minimum key: {min_key}")
 
 extracted_key = binomial_heap.extract_min()
 print(f"Extracted key: {extracted_key}")
+binomial_heap.print_heap()
+
+
+node_to_decrease = binomial_heap.find_node(10)
+print(f"decreased key: {node_to_decrease.key}")
+
+binomial_heap.decrease_key(node_to_decrease, 2)
 binomial_heap.print_heap()

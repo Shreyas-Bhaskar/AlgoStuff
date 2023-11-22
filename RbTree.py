@@ -1,3 +1,5 @@
+from sys import stdout
+
 class Node:
     def __init__(self, key, color="RED"):
         self.key = key
@@ -112,8 +114,24 @@ class RedBlackTree:
             return 0
         return 1 + max(self.height(node.left), self.height(node.right))
 
-    def print_tree(self, node, indent="", last=True):
-        pass
+    def print_tree(self, node, indent="", last='updown'):
+        if node != self.NIL:
+            stdout.write(indent)
+            if last == 'updown':
+                stdout.write("Root----")
+                indent += "     "
+            elif last == 'right':
+                stdout.write("R----")
+                indent += "|    "
+            else:
+                stdout.write("L----")
+                indent += "     "
+        
+            color = "RED" if node.color == "RED" else "BLACK"
+            print(f"{node.key}({color})")
+            self.print_tree(node.left, indent, last='right')
+            self.print_tree(node.right, indent, last='left')
+
 
 def read_input_file(filename):
     with open(filename, "r") as file:
@@ -141,6 +159,7 @@ def main():
                 print("Found")
             else:
                 print("Not found")
+        rb_tree.print_tree(rb_tree.root)
         print("\nHeight of the tree:", rb_tree.height(rb_tree.root))
 
 if __name__ == "__main__":

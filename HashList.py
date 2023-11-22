@@ -133,11 +133,18 @@ def count_words(text, hash_table_size):
 
     return word_count_hash_table
 
-def save_word_counts(word_count_hash_table, output_file_path):
+#def save_word_counts(word_count_hash_table, output_file_path):
     with open(output_file_path, 'w') as file:
         for word in word_count_hash_table.list_all_keys():
             count = word_count_hash_table.find(word)
             file.write(f"{word}: {count}\n")
+
+def save_word_counts(word_count_hash_table, output_file_path):
+    with open(output_file_path, 'w') as file:
+        word_count_list = [(word, word_count_hash_table.find(word)) for word in word_count_hash_table.list_all_keys()]
+        word_count_strings = [f"{word}: {count}" for word, count in word_count_list]
+        output_string = ", ".join(word_count_strings)
+        file.write(f"output {output_string}")
 
 def calculate_variance(list_lengths):
     mean = sum(list_lengths) / len(list_lengths)

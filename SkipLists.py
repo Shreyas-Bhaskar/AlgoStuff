@@ -75,13 +75,24 @@ class SkipList:
             print(f"Moving down from level {i} to level {i-1}")
         print(f"Value {value} not found")
         return False
-skip_list = SkipList(max_level=5)
-operations = [('insert', 20), ('insert', 40), ('insert', 10), ('delete', 20), ('insert', 5), ('insert', 80), ('lookup', 80), ('insert', 100), ('insert', 20), ('insert', 30), ('delete', 5), ('insert', 50), ('lookup', 80)]
-for op, val in operations:
-    if op == 'insert':
-        skip_list.insert(val)
-    elif op == 'delete':
-        skip_list.delete(val)
-    elif op == 'lookup':
-        skip_list.lookup(val)
-    skip_list.display()
+def main():
+    skip_list = SkipList(max_level=5)
+
+    while True:
+        operation = input("Enter operation (insert, delete, lookup) and value, or 'exit' to stop: ").split()
+
+        if operation[0] == 'exit':
+            break
+
+        op, val = operation[0], int(operation[1])
+
+        if op == 'insert':
+            skip_list.insert(val)
+        elif op == 'delete':
+            skip_list.delete(val)
+        elif op == 'lookup':
+            skip_list.lookup(val)
+        skip_list.display()
+
+if __name__ == "__main__":
+    main()
