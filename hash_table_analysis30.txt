@@ -1,9 +1,68 @@
 Histogram of List Lengths:
+Length 0: 
+Length 1: 
+Length 2: 
+Length 3: 
+Length 4: 
+Length 5: 
+Length 6: 
+Length 7: 
+Length 8: 
+Length 9: 
+Length 10: 
+Length 11: 
+Length 12: 
+Length 13: 
+Length 14: 
+Length 15: 
+Length 16: 
+Length 17: 
+Length 18: 
+Length 19: 
+Length 20: 
+Length 21: 
+Length 22: 
+Length 23: 
+Length 24: 
+Length 25: 
+Length 26: 
+Length 27: 
+Length 28: 
+Length 29: 
+Length 30: 
+Length 31: 
+Length 32: 
+Length 33: 
+Length 34: 
+Length 35: 
+Length 36: 
+Length 37: 
+Length 38: 
+Length 39: 
+Length 40: 
+Length 41: 
+Length 42: 
+Length 43: 
+Length 44: 
+Length 45: 
+Length 46: 
+Length 47: 
+Length 48: 
+Length 49: 
 Length 50: *
+Length 51: 
+Length 52: 
 Length 53: *
+Length 54: 
+Length 55: 
+Length 56: 
 Length 57: *
+Length 58: 
+Length 59: 
 Length 60: *
+Length 61: 
 Length 62: **
+Length 63: 
 Length 64: *
 Length 65: *
 Length 66: *
@@ -12,13 +71,17 @@ Length 68: *
 Length 69: *
 Length 70: **
 Length 71: **
+Length 72: 
 Length 73: *
 Length 74: *
+Length 75: 
 Length 76: ***
 Length 77: ***
 Length 78: *
+Length 79: 
 Length 80: *
+Length 81: 
 Length 82: **
 
-Variance of List Lengths: 64.1122222222222
+Variance of List Lengths: 64.11222222222219
 Lengths of the Longest 10% of Lists: [82, 82, 80]

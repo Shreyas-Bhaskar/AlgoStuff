@@ -15,8 +15,23 @@ class SkipList:
         while random.random() < 0.5 and level < self.max_level:
             level += 1
         return level
-
+        
     def insert(self, value):
+        update = [None] * (self.max_level + 1)
+        current = self.header
+        for i in range(self.max_level, -1, -1):
+            while current.forward[i] and current.forward[i].value <= value:  
+                current = current.forward[i]
+            update[i] = current
+
+        random_level = self.random_level()
+        new_node = Node(value, random_level)
+        for i in range(random_level + 1):
+            new_node.forward[i] = update[i].forward[i]
+            update[i].forward[i] = new_node
+
+    
+    def insertx(self, value):
         update = [None] * (self.max_level + 1)
         current = self.header
 
@@ -26,7 +41,6 @@ class SkipList:
             update[i] = current
 
         current = current.forward[0]
-
         if not current or current.value != value:
             random_level = self.random_level()
             new_node = Node(value, random_level)

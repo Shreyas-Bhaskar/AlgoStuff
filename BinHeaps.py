@@ -89,17 +89,55 @@ class BinomialHeap:
         return y.key
 
     def extract_min(self):
+        if self.head is None:
+            return None
+
         min_tree_parent = None
         min_tree = self.head
         prev = None
         curr = self.head
 
-        while curr.sibling is not None:
-            if curr.sibling.key < min_tree.key:
-                min_tree = curr.sibling
+        while curr is not None:
+            if curr.key == float('-inf'):
+                min_tree = curr
+                min_tree_parent = prev
+                break
+            elif curr.key < min_tree.key:
+                min_tree = curr
                 min_tree_parent = prev
             prev = curr
             curr = curr.sibling
+
+        if min_tree_parent is not None:
+            min_tree_parent.sibling = min_tree.sibling
+        else:
+            self.head = min_tree.sibling
+
+        child = min_tree.child
+        temp = BinomialHeap()
+        while child is not None:
+            next_child = child.sibling
+            child.sibling = temp.head
+            temp.head = child
+            child = next_child
+
+        self.head = self.union(temp).head
+        return min_tree.key
+
+    def extract_minx(self):
+        min_tree_parent = None
+        min_tree = self.head
+        prev = None
+        curr = self.head
+        if curr.key == float('-inf'):
+            min_tree = curr
+        else:
+            while curr.sibling is not None:
+                if curr.sibling.key < min_tree.key:
+                    min_tree = curr.sibling
+                    min_tree_parent = prev
+                prev = curr
+                curr = curr.sibling
 
         if min_tree_parent is not None:
             min_tree_parent.sibling = min_tree.sibling
@@ -117,8 +155,18 @@ class BinomialHeap:
 
         self.head = self.union(temp).head
         return min_tree.key
+    def decrease_key(self, node, new_key):
+        if new_key > node.key:
+            raise ValueError("New key is greater than current key")
+        node.key = new_key
+        self._bubble_up(node)
 
-    def decrease_key(self, x, new_key):
+    def _bubble_up(self, node):
+        while node.parent and node.key < node.parent.key:
+            node.key, node.parent.key = node.parent.key, node.key
+            node = node.parent
+
+    def decrease_keyx(self, x, new_key):
         if new_key > x.key:
             raise ValueError("New key is greater than current key")
 
@@ -183,8 +231,8 @@ class BinomialHeap:
         return None
 
 binomial_heap = BinomialHeap()
-keys = [4,6,3,11,9,5,14,10,21,7,13,20,2]
-
+keys = [7,2,4,17,1,11,6,8,15,10,20,5]
+#[4,6,3,11,9,5,14,10,21,7,13,20,2]
 for key in keys:
     binomial_heap.insert(key)
     binomial_heap.print_heap()
@@ -193,6 +241,7 @@ for key in keys:
 
 node_to_delete = None
 current_node = binomial_heap.head
+print("\n")
 
 while current_node is not None:
     print(current_node.key)
@@ -200,26 +249,35 @@ while current_node is not None:
         node_to_delete = current_node
         break
     current_node = current_node.sibling
+print("\n")
 
-if node_to_delete is not None:
-    print(f"Deleted key {node_to_delete.key}")
+#if node_to_delete is not None:
+   # print(f"Deleted key {node_to_delete.key}")
     #binomial_heap.delete(node_to_delete)
-else:
-    print("Key not found in the heap")
+#else:
+    #print("Key not found in the heap")
 
 binomial_heap.print_heap()
+print("\n")
 
 
 min_key = binomial_heap.minimum()
 print(f"Minimum key: {min_key}")
+print("\n")
 
 extracted_key = binomial_heap.extract_min()
 print(f"Extracted key: {extracted_key}")
 binomial_heap.print_heap()
+print("\n")
 
 
-node_to_decrease = binomial_heap.find_node(10)
+node_to_decrease = binomial_heap.find_node(15)
 print(f"decreased key: {node_to_decrease.key}")
-
-binomial_heap.decrease_key(node_to_decrease, 2)
+print("\n")
+binomial_heap.decrease_key(node_to_decrease, 1)
 binomial_heap.print_heap()
+
+#node_to_delete = binomial_heap.find_node(2)
+#print(f"deleted key: {node_to_delete.key}")
+#binomial_heap.delete(node_to_delete)
+
