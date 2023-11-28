@@ -68,6 +68,15 @@ class RedBlackTree:
         node.color = "RED"
         self.insert_fixup(node)
 
+    def search(self, key):
+        
+        node = self.root
+        while node != self.NIL and key != node.key:
+            if key < node.key:
+                node = node.left
+            else:
+                node = node.right
+        return node
     def insert_fixup(self, z):
         while z.parent.color == "RED":
             if z.parent == z.parent.parent.left:
@@ -99,9 +108,120 @@ class RedBlackTree:
                     z.parent.parent.color = "RED"
                     self.left_rotate(z.parent.parent)
         self.root.color = "BLACK"
+    def tree_minimum(self, node):
+        while node.left != self.NIL:
+            node = node.left
+        return node
 
-    def bst_delete(self, z):
-        pass
+    def tree_maximum(self, node):
+        while node.right != self.NIL:
+            node = node.right
+        return node
+
+    def tree_successor(self, node):
+        if node.right != self.NIL:
+            return self.tree_minimum(node.right)
+        y = node.parent
+        while y != self.NIL and node == y.right:
+            node = y
+            y = y.parent
+        return y
+
+    def tree_predecessor(self, node):
+        if node.left != self.NIL:
+            return self.tree_maximum(node.left)
+        y = node.parent
+        while y != self.NIL and node == y.left:
+            node = y
+            y = y.parent
+        return y
+
+    def rb_transplant(self, u, v):
+        if u.parent == self.NIL:
+            self.root = v
+        elif u == u.parent.left:
+            u.parent.left = v
+        else:
+            u.parent.right = v
+        v.parent = u.parent
+
+    def rb_delete_fixup(self, x):
+        while x != self.root and x.color == "BLACK":
+            if x == x.parent.left:
+                w = x.parent.right
+                if w.color == "RED":
+                    w.color = "BLACK"
+                    x.parent.color = "RED"
+                    self.left_rotate(x.parent)
+                    w = x.parent.right
+
+                if w.left.color == "BLACK" and w.right.color == "BLACK":
+                    w.color = "RED"
+                    x = x.parent
+                else:
+                    if w.right.color == "BLACK":
+                        w.left.color = "BLACK"
+                        w.color = "RED"
+                        self.right_rotate(w)
+                        w = x.parent.right
+
+                    w.color = x.parent.color
+                    x.parent.color = "BLACK"
+                    w.right.color = "BLACK"
+                    self.left_rotate(x.parent)
+                    x = self.root
+            else:
+                w = x.parent.left
+                if w.color == "RED":
+                    w.color = "BLACK"
+                    x.parent.color = "RED"
+                    self.right_rotate(x.parent)
+                    w = x.parent.left
+
+                if w.right.color == "BLACK" and w.left.color == "BLACK":
+                    w.color = "RED"
+                    x = x.parent
+                else:
+                    if w.left.color == "BLACK":
+                        w.right.color = "BLACK"
+                        w.color = "RED"
+                        self.left_rotate(w)
+                        w = x.parent.left
+
+                    w.color = x.parent.color
+                    x.parent.color = "BLACK"
+                    w.left.color = "BLACK"
+                    self.right_rotate(x.parent)
+                    x = self.root
+
+        x.color = "BLACK"
+
+    def rb_delete(self, z):
+        y = z
+        y_original_color = y.color
+        if z.left == self.NIL:
+            x = z.right
+            self.rb_transplant(z, z.right)
+        elif z.right == self.NIL:
+            x = z.left
+            self.rb_transplant(z, z.left)
+        else:
+            y = self.tree_minimum(z.right)
+            y_original_color = y.color
+            x = y.right
+            if y.parent == z:
+                x.parent = y
+            else:
+                self.rb_transplant(y, y.right)
+                y.right = z.right
+                y.right.parent = y
+            self.rb_transplant(z, y)
+            y.left = z.left
+            y.left.parent = y
+            y.color = z.color
+
+        if y_original_color == "BLACK":
+            self.rb_delete_fixup(x)
 
     def inorder_traversal(self, node):
         if node != self.NIL:
@@ -146,7 +266,7 @@ def main():
         rb_tree.rb_insert(num)
 
     while True:
-        command = input("\nEnter command (insert x/sort/search x/exit): ").split()
+        command = input("\nEnter command (insert x/sort/search x/min/max/successor x/predecessor x/delete x/exit): ").split()
         if command[0] == "exit":
             break
         elif command[0] == "insert":
@@ -156,9 +276,49 @@ def main():
         elif command[0] == "search":
             node = rb_tree.search(int(command[1]))
             if node != rb_tree.NIL:
-                print("Found")
+                print("Found:", node.key)
             else:
                 print("Not found")
+        elif command[0] == "min":
+            min_node = rb_tree.tree_minimum(rb_tree.root)
+            if min_node != rb_tree.NIL:
+                print("Minimum:", min_node.key)
+            else:
+                print("Tree is empty")
+        elif command[0] == "max":
+            max_node = rb_tree.tree_maximum(rb_tree.root)
+            if max_node != rb_tree.NIL:
+                print("Maximum:", max_node.key)
+            else:
+                print("Tree is empty")
+        elif command[0] == "successor":
+            node = rb_tree.search(int(command[1]))
+            if node != rb_tree.NIL:
+                succ = rb_tree.tree_successor(node)
+                if succ != rb_tree.NIL:
+                    print("Successor:", succ.key)
+                else:
+                    print("No successor found")
+            else:
+                print("Node not found")
+        elif command[0] == "predecessor":
+            node = rb_tree.search(int(command[1]))
+            if node != rb_tree.NIL:
+                pred = rb_tree.tree_predecessor(node)
+                if pred != rb_tree.NIL:
+                    print("Predecessor:", pred.key)
+                else:
+                    print("No predecessor found")
+            else:
+                print("Node not found")
+        elif command[0] == "delete":
+            node = rb_tree.search(int(command[1]))
+            if node != rb_tree.NIL:
+                rb_tree.rb_delete(node)
+                print("Deleted:", int(command[1]))
+            else:
+                print("Node not found to delete")
+
         rb_tree.print_tree(rb_tree.root)
         print("\nHeight of the tree:", rb_tree.height(rb_tree.root))
 
