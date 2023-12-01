@@ -80,7 +80,7 @@ class RedBlackTree:
     def insert_fixup(self, z):
         while z.parent.color == "RED":
             if z.parent == z.parent.parent.left:
-                y = z.parent.parent.right
+                y = z.parent.parent.right 
                 if y.color == "RED":
                     z.parent.color = "BLACK"
                     y.color = "BLACK"
@@ -258,8 +258,10 @@ def read_input_file(filename):
         return [int(x) for x in file.read().split()]
 
 def main():
-    filename = input("Enter the filename: ")
-    numbers = read_input_file(filename)
+    #filename = input("Enter the filename: ")
+    numbers = [7,4,2]
+    #[50,30,70,20,40,60,80,15,25,35,45,55,65,75,85]
+    #read_input_file(filename)
 
     rb_tree = RedBlackTree()
     for num in numbers:
