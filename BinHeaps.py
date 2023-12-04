@@ -277,7 +277,7 @@ print("\n")
 binomial_heap.decrease_key(node_to_decrease, 1)
 binomial_heap.print_heap()
 
-#node_to_delete = binomial_heap.find_node(2)
-#print(f"deleted key: {node_to_delete.key}")
-#binomial_heap.delete(node_to_delete)
+node_to_delete = binomial_heap.find_node(1)
+print(f"deleted key: {node_to_delete.key}")
+binomial_heap.delete(node_to_delete)
 
