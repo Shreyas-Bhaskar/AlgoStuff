@@ -44,7 +44,7 @@ Length 41:
 Length 42: 
 Length 43: 
 Length 44: 
-Length 45: 
+Length 45: *
 Length 46: 
 Length 47: 
 Length 48: 
@@ -52,36 +52,35 @@ Length 49:
 Length 50: *
 Length 51: 
 Length 52: 
-Length 53: *
+Length 53: 
 Length 54: 
 Length 55: 
 Length 56: 
-Length 57: *
+Length 57: **
 Length 58: 
 Length 59: 
-Length 60: *
+Length 60: 
 Length 61: 
-Length 62: **
-Length 63: 
+Length 62: 
+Length 63: **
 Length 64: *
 Length 65: *
-Length 66: *
-Length 67: ***
-Length 68: *
-Length 69: *
+Length 66: 
+Length 67: **
+Length 68: **
+Length 69: **
 Length 70: **
-Length 71: **
+Length 71: 
 Length 72: 
 Length 73: *
-Length 74: *
+Length 74: ***
 Length 75: 
-Length 76: ***
+Length 76: **
 Length 77: ***
 Length 78: *
-Length 79: 
+Length 79: **
 Length 80: *
-Length 81: 
-Length 82: **
+Length 81: *
 
-Variance of List Lengths: 64.11222222222219
-Lengths of the Longest 10% of Lists: [82, 82, 80]
+Variance of List Lengths: 75.57888888888884
+Lengths of the Longest 10% of Lists: [81, 80, 79]

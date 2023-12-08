@@ -71,14 +71,15 @@ class HashTable:
         for char in key:
             hash_val = (hash_val * 31 + ord(char)) % self.size
         return hash_val
-    #def hash_functionx(self, key):
-    #    hash_val = 0
-    #    p = 31  # A prime number, often a good choice for the base in a rolling hash
-    #    p_pow = 1  # Initially p^0
-    #    for char in key:
-    #        hash_val = (hash_val + (ord(char) - ord('a') + 1) * p_pow) % self.size
-    #        p_pow = (p_pow * p) % self.size
-    #   return hash_val
+    
+    def hash_functionx(self, key):
+        hash_val = 0
+        p = 31  
+        p_pow = 1 
+        for char in key:
+            hash_val = (hash_val + (ord(char) - ord('a') + 1) * p_pow) % self.size
+            p_pow = (p_pow * p) % self.size
+        return hash_val
 
     def insert(self, key, value=1):
         index = self.hash_function(key)
@@ -214,25 +215,22 @@ def analyze_hash_tablex(hash_table, output_file_path):
 def main():
     input_file_path = "alice.txt"
     output_file_path = "word_counts.txt"
-    chosen_hash_table_size = 30  # Select one size for the hash table
+    chosen_hash_table_size = 1000 
 
     try:
         with open(input_file_path, 'r') as file:
             alice_text = file.read()
 
-        # Process the text and analyze the hash table
         word_count_hash_table = count_words(alice_text, chosen_hash_table_size)
         save_word_counts(word_count_hash_table, output_file_path)
         analyze_hash_table(word_count_hash_table, f"hash_table_analysis{chosen_hash_table_size}.txt")
 
-        # Interactive loop for user operations
         while True:
             command = input("Enter command (insert, delete, increase, find, list, exit): ").split()
             operation = command[0].lower()
 
             if operation == "exit":
                 break
-            # ... within the main function ...
 
             elif operation == "insert" and len(command) == 3:
                 key, value = command[1], int(command[2])
